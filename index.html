@@ -1,101 +1,1330 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>高铁出行阅读平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>高铁出行服务</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif}
-body{background:linear-gradient(135deg,#e6f2ff,#f0f8ff);color:#222}
-header{background:linear-gradient(90deg,#0052cc,#007bff);color:white;padding:20px;text-align:center;border-radius:0 0 20px 20px;box-shadow:0 4px 12px rgba(0,82,204,0.2)}
-.container{max-width:1100px;margin:25px auto;padding:0 15px}
-.card{background:white;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 6px 18px rgba(0,0,0,0.08);border:1px solid #e6f0ff}
-h2{color:#0052cc;margin-bottom:14px;font-size:22px}
-.table{width:100%;border-collapse:collapse;margin-top:10px}
-.table th{background:#e6f2ff;color:#0052cc;padding:12px;text-align:left}
-.table td{padding:12px;border-bottom:1px solid #f0f0f0}
-.btn{background:linear-gradient(90deg,#007bff,#0052cc);color:white;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
-.btn:hover{opacity:0.9}
-.food-list{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px}
-.food-item{width:150px;padding:14px;border-radius:12px;background:#f8fbff;border:1px solid #e6f0ff;text-align:center}
-.book-area{background:#fff8e6;border:1px solid #ffe8b3;border-radius:14px;padding:20px;margin-top:10px}
-.book-title{font-size:18px;color:#b36b00;margin-bottom:8px}
-.book-content{font-size:15px;line-height:1.8;color:#444}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --primary: #1a73e8;
+    --primary-light: #e8f0fe;
+    --primary-dark: #1557b0;
+    --accent: #ff6b35;
+    --bg: #f5f7fa;
+    --card: #ffffff;
+    --text: #1a1a2e;
+    --text-light: #6b7280;
+    --border: #e5e7eb;
+    --success: #10b981;
+    --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* ===== Header ===== */
+  .header {
+    background: linear-gradient(135deg, var(--primary), #4a90d9);
+    color: white;
+    padding: 20px 20px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    left: -10%;
+    right: -10%;
+    height: 60px;
+    background: var(--bg);
+    border-radius: 50% 50% 0 0;
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .header h1 { font-size: 22px; font-weight: 700; }
+  .header-sub { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+  .header-icon {
+    width: 36px; height: 36px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+
+  /* ===== Search Box ===== */
+  .search-box {
+    margin: -30px 16px 16px;
+    background: var(--card);
+    border-radius: 16px;
+    padding: 16px;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    z-index: 10;
+  }
+  .search-input-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .search-input-row input {
+    flex: 1;
+    border: none;
+    font-size: 15px;
+    outline: none;
+    color: var(--text);
+    padding: 8px 0;
+  }
+  .search-input-row input::placeholder { color: #b0b0b0; }
+  .swap-btn {
+    width: 32px; height: 32px;
+    background: var(--primary-light);
+    border: none;
+    border-radius: 50%;
+    color: var(--primary);
+    font-size: 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.3s;
+  }
+  .swap-btn:active { transform: rotate(180deg); }
+  .search-line {
+    height: 1px;
+    background: var(--border);
+    margin: 12px 0;
+  }
+  .search-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .search-meta span { font-size: 12px; color: var(--text-light); }
+  .search-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .search-btn:active { background: var(--primary-dark); transform: scale(0.95); }
+
+  /* ===== Quick Nav ===== */
+  .quick-nav {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    padding: 8px 16px 16px;
+  }
+  .quick-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .quick-item:active { transform: scale(0.9); }
+  .quick-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+  }
+  .quick-item span { font-size: 12px; color: var(--text-light); font-weight: 500; }
+
+  /* ===== Section ===== */
+  .section {
+    padding: 0 16px 16px;
+  }
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .section-header h2 { font-size: 17px; font-weight: 700; }
+  .section-header a {
+    font-size: 13px;
+    color: var(--primary);
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* ===== Train Cards ===== */
+  .train-list { display: flex; flex-direction: column; gap: 10px; }
+  .train-card {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 16px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 4px solid var(--primary);
+  }
+  .train-card:active { transform: scale(0.98); }
+  .train-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .train-no {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--primary-light);
+    padding: 3px 10px;
+    border-radius: 6px;
+  }
+  .train-type {
+    font-size: 11px;
+    color: var(--text-light);
+    background: #f0f0f0;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+  .train-route {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .train-station { text-align: center; flex: 1; }
+  .train-time { font-size: 22px; font-weight: 700; }
+  .train-city { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+  .train-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--text-light);
+    font-size: 11px;
+    min-width: 70px;
+  }
+  .train-arrow .line {
+    width: 50px; height: 2px;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    position: relative;
+    margin: 4px 0;
+  }
+  .train-arrow .line::after {
+    content: '▸';
+    position: absolute;
+    right: -8px;
+    top: -8px;
+    color: var(--accent);
+    font-size: 14px;
+  }
+  .train-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+  }
+  .train-price { font-size: 18px; font-weight: 700; color: var(--accent); }
+  .train-price small { font-size: 12px; font-weight: 400; }
+  .train-status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+  }
+  .status-green { background: #d1fae5; color: #065f46; }
+  .status-orange { background: #fef3c7; color: #92400e; }
+  .status-gray { background: #f3f4f6; color: #6b7280; }
+
+  /* ===== Station Cards ===== */
+  .station-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+  .station-scroll::-webkit-scrollbar { display: none; }
+  .station-card {
+    min-width: 200px;
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    scroll-snap-align: start;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .station-card:active { transform: scale(0.97); }
+  .station-img {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    position: relative;
+  }
+  .station-info { padding: 12px; }
+  .station-info h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .station-info p { font-size: 12px; color: var(--text-light); line-height: 1.5; }
+  .station-tags { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
+  .station-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--primary-light);
+    color: var(--primary);
+  }
+
+  /* ===== Book Cards ===== */
+  .book-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .book-scroll::-webkit-scrollbar { display: none; }
+  .book-card {
+    min-width: 140px;
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .book-card:active { transform: scale(0.97); }
+  .book-cover {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 50px;
+    position: relative;
+  }
+  .book-cover .book-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 8px;
+  }
+  .book-info { padding: 10px; }
+  .book-info h3 { font-size: 13px; font-weight: 600; margin-bottom: 4px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .book-info p { font-size: 11px; color: var(--text-light); }
+  .book-rating { color: #f59e0b; font-size: 11px; margin-top: 4px; }
+
+  /* ===== Spot Cards ===== */
+  .spot-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .spot-scroll::-webkit-scrollbar { display: none; }
+  .spot-card {
+    min-width: 220px;
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .spot-card:active { transform: scale(0.97); }
+  .spot-img {
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    position: relative;
+  }
+  .spot-img .spot-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    backdrop-filter: blur(4px);
+  }
+  .spot-info { padding: 12px; }
+  .spot-info h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .spot-info p { font-size: 12px; color: var(--text-light); margin-bottom: 6px; }
+  .spot-meta { display: flex; justify-content: space-between; align-items: center; }
+  .spot-rating { color: #f59e0b; font-size: 12px; }
+  .spot-dist { font-size: 11px; color: var(--primary); }
+
+  /* ===== Meal Section ===== */
+  .meal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .meal-card {
+    background: var(--card);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .meal-card:active { transform: scale(0.97); }
+  .meal-img {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+  }
+  .meal-info { padding: 10px; }
+  .meal-info h3 { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .meal-info p { font-size: 11px; color: var(--text-light); margin-bottom: 8px; }
+  .meal-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .meal-price { font-size: 16px; font-weight: 700; color: var(--accent); }
+  .meal-price small { font-size: 11px; font-weight: 400; }
+  .add-btn {
+    width: 28px; height: 28px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .add-btn:active { transform: scale(0.85); background: var(--primary-dark); }
+
+  /* ===== Cart ===== */
+  .cart-bar {
+    position: fixed;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 32px);
+    max-width: 448px;
+    background: var(--card);
+    border-radius: 16px;
+    padding: 12px 16px;
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 100;
+    display: none;
+  }
+  .cart-bar.show { display: flex; }
+  .cart-left { display: flex; align-items: center; gap: 10px; }
+  .cart-icon { font-size: 24px; position: relative; }
+  .cart-badge {
+    position: absolute;
+    top: -6px; right: -8px;
+    background: var(--accent);
+    color: white;
+    font-size: 10px;
+    min-width: 16px; height: 16px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+  .cart-total { font-size: 16px; font-weight: 700; color: var(--accent); }
+  .cart-total small { font-size: 11px; color: var(--text-light); font-weight: 400; }
+  .checkout-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .checkout-btn:active { opacity: 0.85; }
+
+  /* ===== Tab Bar ===== */
+  .tab-bar {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: var(--card);
+    display: flex;
+    border-top: 1px solid var(--border);
+    z-index: 100;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: none;
+    color: var(--text-light);
+    font-size: 10px;
+    gap: 2px;
+  }
+  .tab-item.active { color: var(--primary); }
+  .tab-item .tab-icon { font-size: 22px; }
+  .tab-item span { font-weight: 500; }
+
+  /* ===== Pages ===== */
+  .page { display: none; padding-bottom: 140px; }
+  .page.active { display: block; }
+
+  /* ===== Page Header ===== */
+  .page-header {
+    background: linear-gradient(135deg, var(--primary), #4a90d9);
+    color: white;
+    padding: 50px 20px 24px;
+    position: relative;
+  }
+  .page-header h1 { font-size: 20px; font-weight: 700; }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: -5%;
+    right: -5%;
+    height: 40px;
+    background: var(--bg);
+    border-radius: 50% 50% 0 0;
+  }
+
+  /* ===== Detail Modal ===== */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 200;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--card);
+    border-radius: 20px 20px 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 20px;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+  .modal-handle {
+    width: 40px; height: 4px;
+    background: #d0d0d0;
+    border-radius: 2px;
+    margin: 0 auto 16px;
+  }
+  .modal h2 { font-size: 18px; margin-bottom: 12px; }
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    width: 32px; height: 32px;
+    border: none;
+    background: #f0f0f0;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .detail-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .detail-row .label { color: var(--text-light); }
+  .detail-row .value { font-weight: 600; }
+
+  /* ===== Toast ===== */
+  .toast {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 14px;
+    z-index: 300;
+    opacity: 0;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* ===== Meal Category Tabs ===== */
+  .meal-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px 12px;
+    overflow-x: auto;
+  }
+  .meal-tabs::-webkit-scrollbar { display: none; }
+  .meal-tab {
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text-light);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+  }
+  .meal-tab.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+  }
+
+  /* ===== Order Success ===== */
+  .order-success {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .order-success .check { font-size: 60px; margin-bottom: 16px; }
+  .order-success h2 { font-size: 20px; margin-bottom: 8px; }
+  .order-success p { color: var(--text-light); font-size: 14px; margin-bottom: 24px; }
+  .order-info {
+    background: var(--bg);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: left;
+    margin-bottom: 24px;
+  }
+  .order-info .detail-row { font-size: 13px; }
+  .back-home-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    padding: 12px 40px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  /* ===== Scrollbar ===== */
+  ::-webkit-scrollbar { width: 0; height: 0; }
+
+  /* ===== Animations ===== */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-in { animation: fadeIn 0.4s ease forwards; }
 </style>
 </head>
 <body>
-<header>
-<h1>🚄 高铁出行 · 阅读 · 点餐平台</h1>
-<p>车次查询 · 车站信息 · 景点推荐 · 高铁阅读 · 在线点餐</p>
-</header>
 
-<div class="container">
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 
-<!-- 车次信息 -->
-<div class="card">
-<h2>🚄 高铁车次信息</h2>
-<table class="table">
-<tr><th>车次</th><th>出发站</th><th>到达站</th><th>发车</th><th>到达</th></tr>
-<tr><td>G101</td><td>昆明南</td><td>大理</td><td>08:00</td><td>10:15</td></tr>
-<tr><td>G205</td><td>昆明南</td><td>丽江</td><td>09:30</td><td>12:45</td></tr>
-<tr><td>G312</td><td>昆明南</td><td>贵阳北</td><td>11:10</td><td>14:20</td></tr>
-<tr><td>G408</td><td>昆明南</td><td>成都东</td><td>13:20</td><td>17:05</td></tr>
-</table>
+<!-- ===== Page: Home ===== -->
+<div class="page active" id="page-home">
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1>🚄 高铁出行</h1>
+        <div class="header-sub">让旅途更美好</div>
+      </div>
+      <div class="header-icon">👤</div>
+    </div>
+  </div>
+
+  <!-- Search -->
+  <div class="search-box">
+    <div class="search-input-row">
+      <input type="text" id="fromStation" placeholder="出发城市" value="北京">
+      <button class="swap-btn" onclick="swapStations()">⇄</button>
+      <input type="text" id="toStation" placeholder="到达城市" value="上海">
+    </div>
+    <div class="search-line"></div>
+    <div class="search-meta">
+      <span id="todayDate"></span>
+      <button class="search-btn" onclick="searchTrains()">查询车次</button>
+    </div>
+  </div>
+
+  <!-- Quick Nav -->
+  <div class="quick-nav">
+    <div class="quick-item" onclick="switchTab('train')">
+      <div class="quick-icon" style="background:#e8f0fe;">🚄</div>
+      <span>车次查询</span>
+    </div>
+    <div class="quick-item" onclick="switchTab('station')">
+      <div class="quick-icon" style="background:#fef3c7;">🏛️</div>
+      <span>车站信息</span>
+    </div>
+    <div class="quick-item" onclick="switchTab('book')">
+      <div class="quick-icon" style="background:#d1fae5;">📚</div>
+      <span>旅途阅读</span>
+    </div>
+    <div class="quick-item" onclick="switchTab('spot')">
+      <div class="quick-icon" style="background:#fce7f3;">🗺️</div>
+      <span>景点推荐</span>
+    </div>
+    <div class="quick-item" onclick="switchTab('meal')">
+      <div class="quick-icon" style="background:#ede9fe;">🍱</div>
+      <span>高铁订餐</span>
+    </div>
+    <div class="quick-item" onclick="showToast('正点率 98.6%')">
+      <div class="quick-icon" style="background:#e8f0fe;">⏱️</div>
+      <span>正点查询</span>
+    </div>
+    <div class="quick-item" onclick="showToast('行李服务已开启')">
+      <div class="quick-icon" style="background:#fef3c7;">🧳</div>
+      <span>行李服务</span>
+    </div>
+    <div class="quick-item" onclick="showToast('客服连接中...')">
+      <div class="quick-icon" style="background:#d1fae5;">💬</div>
+      <span>在线客服</span>
+    </div>
+  </div>
+
+  <!-- Hot Trains -->
+  <div class="section">
+    <div class="section-header">
+      <h2>🔥 热门车次</h2>
+      <a onclick="switchTab('train')">查看更多 ›</a>
+    </div>
+    <div class="train-list" id="hotTrainList"></div>
+  </div>
+
+  <!-- Nearby Spots -->
+  <div class="section">
+    <div class="section-header">
+      <h2>📍 沿途景点</h2>
+      <a onclick="switchTab('spot')">更多 ›</a>
+    </div>
+    <div class="spot-scroll" id="homeSpotScroll"></div>
+  </div>
 </div>
 
-<!-- 车站信息 -->
-<div class="card">
-<h2>🏢 高铁车站信息</h2>
-<table class="table">
-<tr><th>车站</th><th>城市</th><th>地址</th><th>服务</th></tr>
-<tr><td>昆明南站</td><td>昆明市</td><td>呈贡区吴家营</td><td>候车室、餐饮、寄存</td></tr>
-<tr><td>大理站</td><td>大理市</td><td>下关镇</td><td>旅游咨询、特产店</td></tr>
-<tr><td>丽江站</td><td>丽江市</td><td>古城区南口路</td><td>接送、租车</td></tr>
-<tr><td>普洱站</td><td>普洱市</td><td>思茅区石龙路</td><td>休息、充电</td></tr>
-</table>
+<!-- ===== Page: Train ===== -->
+<div class="page" id="page-train">
+  <div class="page-header">
+    <h1>🚄 车次查询</h1>
+  </div>
+  <div style="padding:16px;">
+    <div class="search-box" style="margin:0;box-shadow:var(--shadow);">
+      <div class="search-input-row">
+        <input type="text" id="trainFrom" placeholder="出发城市" value="北京">
+        <button class="swap-btn" onclick="swapTrainStations()">⇄</button>
+        <input type="text" id="trainTo" placeholder="到达城市" value="上海">
+      </div>
+      <div class="search-line"></div>
+      <div class="search-meta">
+        <span>共 128 趟列车</span>
+        <button class="search-btn" onclick="searchTrainDetail()">搜索</button>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="train-list" id="fullTrainList"></div>
+  </div>
 </div>
 
-<!-- 旅游景点 -->
-<div class="card">
-<h2>🌄 沿线旅游景点</h2>
-<table class="table">
-<tr><th>城市</th><th>景点</th><th>简介</th></tr>
-<tr><td>大理</td><td>洱海、大理古城</td><td>风花雪月、苍山洱海</td></tr>
-<tr><td>丽江</td><td>玉龙雪山、古城</td><td>纳西文化、雪山美景</td></tr>
-<tr><td>昆明</td><td>滇池、石林</td><td>春城风光、喀斯特地貌</td></tr>
-<tr><td>普洱</td><td>普洱茶园、太阳河公园</td><td>茶文化、自然生态</td></tr>
-</table>
+<!-- ===== Page: Station ===== -->
+<div class="page" id="page-station">
+  <div class="page-header">
+    <h1>🏛️ 车站信息</h1>
+  </div>
+  <div class="section" style="padding-top:24px;">
+    <div class="section-header">
+      <h2>主要枢纽车站</h2>
+    </div>
+    <div class="station-scroll" id="stationScroll"></div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>车站设施</h2>
+    </div>
+    <div style="background:var(--card);border-radius:14px;padding:16px;box-shadow:var(--shadow);">
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;text-align:center;">
+        <div><div style="font-size:28px;margin-bottom:4px;">🎫</div><div style="font-size:12px;color:var(--text-light);">自助售票</div></div>
+        <div><div style="font-size:28px;margin-bottom:4px;">🍜</div><div style="font-size:12px;color:var(--text-light);">餐饮美食</div></div>
+        <div><div style="font-size:28px;margin-bottom:4px;">🚻</div><div style="font-size:12px;color:var(--text-light);">卫生间</div></div>
+        <div><div style="font-size:28px;margin-bottom:4px;">📶</div><div style="font-size:12px;color:var(--text-light);">免费WiFi</div></div>
+        <div><div style="font-size:28px;margin-bottom:4px;">♿</div><div style="font-size:12px;color:var(--text-light);">无障碍</div></div>
+        <div><div style="font-size:28px;margin-bottom:4px;">🅿️</div><div style="font-size:12px;color:var(--text-light);">停车场</div></div>
+        <div><div style="font-size:28px;margin-bottom:4px;">🏪</div><div style="font-size:12px;color:var(--text-light);">便利店</div></div>
+        <div><div style="font-size:28px;margin-bottom:4px;">🔋</div><div style="font-size:12px;color:var(--text-light);">充电站</div></div>
+        <div><div style="font-size:28px;margin-bottom:4px;">🛗</div><div style="font-size:12px;color:var(--text-light);">电梯</div></div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<!-- 高铁阅读区（新增！） -->
-<div class="card">
-<h2>📖 高铁阅读区（旅途不无聊）</h2>
-<div class="book-area">
-<div class="book-title">《高铁上的风景》</div>
-<div class="book-content">
-高铁飞驰，窗外掠过山川河流、田野村庄。从昆明到大理，一路青山绿水；从大理到丽江，云雾缭绕如仙境。旅途虽短，风景无限，愿你在高铁上遇见最美的云南。
-</div>
-</div>
-<div class="book-area" style="margin-top:12px">
-<div class="book-title">《云南旅行小记》</div>
-<div class="book-content">
-云南的美，藏在风里、云里、山水里。大理的风，丽江的雪，昆明的花，普洱的茶。每一座城市都有自己的故事，每一段旅途都值得珍藏。
-</div>
-</div>
-</div>
-
-<!-- 高铁点餐 -->
-<div class="card">
-<h2>🍱 高铁点餐（到站送达）</h2>
-<div class="food-list">
-<div class="food-item"><p>红烧牛肉饭</p><p>¥38</p><button class="btn">点餐</button></div>
-<div class="food-item"><p>香菇滑鸡饭</p><p>¥35</p><button class="btn">点餐</button></div>
-<div class="food-item"><p>素食套餐</p><p>¥32</p><button class="btn">点餐</button></div>
-<div class="food-item"><p>云南过桥米线</p><p>¥42</p><button class="btn">点餐</button></div>
-<div class="food-item"><p>普洱奶茶</p><p>¥18</p><button class="btn">点餐</button></div>
-</div>
+<!-- ===== Page: Book ===== -->
+<div class="page" id="page-book">
+  <div class="page-header">
+    <h1>📚 旅途阅读</h1>
+  </div>
+  <div class="section" style="padding-top:24px;">
+    <div class="section-header">
+      <h2>📖 热门推荐</h2>
+    </div>
+    <div class="book-scroll" id="bookScroll"></div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>🎧 有声书</h2>
+    </div>
+    <div class="book-scroll" id="audioBookScroll"></div>
+  </div>
+  <div class="section">
+    <div class="section-header">
+      <h2>📰 旅途杂志</h2>
+    </div>
+    <div class="book-scroll" id="magazineScroll"></div>
+  </div>
 </div>
 
+<!-- ===== Page: Spot ===== -->
+<div class="page" id="page-spot">
+  <div class="page-header">
+    <h1>🗺️ 景点推荐</h1>
+  </div>
+  <div class="section" style="padding-top:24px;">
+    <div class="section-header">
+      <h2>🌟 必去景点</h2>
+    </div>
+    <div id="spotList"></div>
+  </div>
 </div>
+
+<!-- ===== Page: Meal ===== -->
+<div class="page" id="page-meal">
+  <div class="page-header">
+    <h1>🍱 高铁订餐</h1>
+  </div>
+  <div class="meal-tabs" id="mealTabs">
+    <div class="meal-tab active" onclick="filterMeal('all',this)">全部</div>
+    <div class="meal-tab" onclick="filterMeal('rice',this)">米饭套餐</div>
+    <div class="meal-tab" onclick="filterMeal('noodle',this)">面食</div>
+    <div class="meal-tab" onclick="filterMeal('snack',this)">小食</div>
+    <div class="meal-tab" onclick="filterMeal('drink',this)">饮品</div>
+  </div>
+  <div class="section">
+    <div class="meal-grid" id="mealGrid"></div>
+  </div>
+</div>
+
+<!-- ===== Cart Bar ===== -->
+<div class="cart-bar" id="cartBar">
+  <div class="cart-left">
+    <div class="cart-icon">🛒<span class="cart-badge" id="cartBadge">0</span></div>
+    <div class="cart-total">¥<span id="cartTotal">0</span></div>
+  </div>
+  <button class="checkout-btn" onclick="checkout()">去结算</button>
+</div>
+
+<!-- ===== Tab Bar ===== -->
+<div class="tab-bar">
+  <button class="tab-item active" onclick="switchTab('home')">
+    <span class="tab-icon">🏠</span>
+    <span>首页</span>
+  </button>
+  <button class="tab-item" onclick="switchTab('train')">
+    <span class="tab-icon">🚄</span>
+    <span>车次</span>
+  </button>
+  <button class="tab-item" onclick="switchTab('station')">
+    <span class="tab-icon">🏛️</span>
+    <span>车站</span>
+  </button>
+  <button class="tab-item" onclick="switchTab('book')">
+    <span class="tab-icon">📚</span>
+    <span>阅读</span>
+  </button>
+  <button class="tab-item" onclick="switchTab('spot')">
+    <span class="tab-icon">🗺️</span>
+    <span>景点</span>
+  </button>
+  <button class="tab-item" onclick="switchTab('meal')">
+    <span class="tab-icon">🍱</span>
+    <span>订餐</span>
+  </button>
+</div>
+
+<!-- ===== Detail Modal ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal" id="modalContent" onclick="event.stopPropagation()">
+    <div class="modal-handle"></div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<!-- ===== Order Success Modal ===== -->
+<div class="modal-overlay" id="orderModal" onclick="closeOrderModal(event)">
+  <div class="modal" onclick="event.stopPropagation()">
+    <div class="order-success">
+      <div class="check">✅</div>
+      <h2>订餐成功！</h2>
+      <p>餐食将配送至您的座位</p>
+      <div class="order-info" id="orderInfo"></div>
+      <button class="back-home-btn" onclick="closeOrderModal()">返回首页</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+const trains = [
+  { no:'G1', type:'复兴号', from:'北京南', to:'上海虹桥', dep:'06:36', arr:'11:04', dur:'4h28m', price:'¥553', status:'有票', statusClass:'status-green', seats:['商务座 ¥1748','一等座 ¥933','二等座 ¥553'] },
+  { no:'G3', type:'复兴号', from:'北京南', to:'上海虹桥', dep:'07:00', arr:'11:28', dur:'4h28m', price:'¥553', status:'有票', statusClass:'status-green', seats:['商务座 ¥1748','一等座 ¥933','二等座 ¥553'] },
+  { no:'G5', type:'和谐号', from:'北京南', to:'上海虹桥', dep:'07:36', arr:'12:06', dur:'4h30m', price:'¥553', status:'紧张', statusClass:'status-orange', seats:['商务座 ¥1748','一等座 ¥933','二等座 ¥553'] },
+  { no:'G7', type:'复兴号', from:'北京南', to:'上海虹桥', dep:'08:00', arr:'12:24', dur:'4h24m', price:'¥553', status:'有票', statusClass:'status-green', seats:['商务座 ¥1748','一等座 ¥933','二等座 ¥553'] },
+  { no:'G11', type:'和谐号', from:'北京南', to:'上海虹桥', dep:'09:00', arr:'13:38', dur:'4h38m', price:'¥553', status:'售罄', statusClass:'status-gray', seats:['商务座 售罄','一等座 售罄','二等座 售罄'] },
+  { no:'G13', type:'复兴号智能', from:'北京南', to:'上海虹桥', dep:'09:36', arr:'13:58', dur:'4h22m', price:'¥553', status:'有票', statusClass:'status-green', seats:['商务座 ¥1748','一等座 ¥933','二等座 ¥553'] },
+  { no:'G21', type:'复兴号', from:'北京南', to:'上海虹桥', dep:'11:00', arr:'15:36', dur:'4h36m', price:'¥553', status:'有票', statusClass:'status-green', seats:['商务座 ¥1748','一等座 ¥933','二等座 ¥553'] },
+  { no:'G101', type:'和谐号', from:'北京南', to:'上海虹桥', dep:'14:00', arr:'19:06', dur:'5h06m', price:'¥553', status:'紧张', statusClass:'status-orange', seats:['商务座 ¥1748','一等座 ¥933','二等座 ¥553'] },
+];
+
+const stations = [
+  { name:'北京南站', icon:'🏛️', bg:'linear-gradient(135deg,#667eea,#764ba2)', desc:'中国最大高铁站之一，年发送旅客超1亿人次', tags:['13站台','24线','地铁4/14号线'] },
+  { name:'上海虹桥站', icon:'🌆', bg:'linear-gradient(135deg,#f093fb,#f5576c)', desc:'华东地区最大交通枢纽，无缝衔接航空高铁', tags:['16站台','30线','地铁2/10/17号线'] },
+  { name:'广州南站', icon:'🌴', bg:'linear-gradient(135deg,#4facfe,#00f2fe)', desc:'华南地区最重要的铁路枢纽站', tags:['15站台','28线','地铁2/7/22号线'] },
+  { name:'南京南站', icon:'🏯', bg:'linear-gradient(135deg,#43e97b,#38f9d7)', desc:'亚洲最大高铁站之一，京沪高铁重要节点', tags:['15站台','28线','地铁1/3/S1号线'] },
+  { name:'杭州东站', icon:'🌊', bg:'linear-gradient(135deg,#fa709a,#fee140)', desc:'长三角重要枢纽，沪杭高铁核心站点', tags:['15站台','30线','地铁1/4/6/19号线'] },
+  { name:'成都东站', icon:'🐼', bg:'linear-gradient(135deg,#a18cd1,#fbc2eb)', desc:'西南地区最大综合交通枢纽', tags:['14站台','26线','地铁2/7号线'] },
+];
+
+const books = [
+  { title:'百年孤独', author:'马尔克斯', cover:'📕', bg:'linear-gradient(135deg,#ff9a9e,#fecfef)', rating:4.9, badge:'经典' },
+  { title:'人类简史', author:'赫拉利', cover:'📗', bg:'linear-gradient(135deg,#a1c4fd,#c2e9fb)', rating:4.8, badge:'畅销' },
+  { title:'三体', author:'刘慈欣', cover:'📘', bg:'linear-gradient(135deg,#667eea,#764ba2)', rating:4.9, badge:'科幻' },
+  { title:'小王子', author:'圣埃克苏佩里', cover:'📙', bg:'linear-gradient(135deg,#f093fb,#f5576c)', rating:4.7, badge:'经典' },
+  { title:'活着', author:'余华', cover:'📕', bg:'linear-gradient(135deg,#ffecd2,#fcb69f)', rating:4.8, badge:'文学' },
+  { title:'时间简史', author:'霍金', cover:'📗', bg:'linear-gradient(135deg,#a8edea,#fed6e3)', rating:4.7, badge:'科普' },
+];
+
+const audioBooks = [
+  { title:'明朝那些事儿', author:'当年明月', cover:'🎧', bg:'linear-gradient(135deg,#ffecd2,#fcb69f)', rating:4.8, badge:'热门' },
+  { title:'盗墓笔记', author:'南派三叔', cover:'🎧', bg:'linear-gradient(135deg,#667eea,#764ba2)', rating:4.6, badge:'悬疑' },
+  { title:'平凡的世界', author:'路遥', cover:'🎧', bg:'linear-gradient(135deg,#f093fb,#f5576c)', rating:4.9, badge:'经典' },
+  { title:'鬼吹灯', author:'天下霸唱', cover:'🎧', bg:'linear-gradient(135deg,#4facfe,#00f2fe)', rating:4.5, badge:'冒险' },
+];
+
+const magazines = [
+  { title:'中国国家地理', author:'月刊', cover:'📰', bg:'linear-gradient(135deg,#43e97b,#38f9d7)', rating:4.7, badge:'地理' },
+  { title:'读者', author:'半月刊', cover:'📰', bg:'linear-gradient(135deg,#fa709a,#fee140)', rating:4.6, badge:'文学' },
+  { title:'三联生活周刊', author:'周刊', cover:'📰', bg:'linear-gradient(135deg,#a18cd1,#fbc2eb)', rating:4.7, badge:'综合' },
+  { title:'第一财经周刊', author:'周刊', cover:'📰', bg:'linear-gradient(135deg,#ff9a9e,#fecfef)', rating:4.5, badge:'财经' },
+];
+
+const spots = [
+  { name:'外滩', city:'上海', desc:'上海标志性景观，百年建筑群与现代天际线交相辉映', icon:'🌃', bg:'linear-gradient(135deg,#667eea,#764ba2)', rating:4.8, dist:'距虹桥站 18km', badge:'必打卡' },
+  { name:'故宫博物院', city:'北京', desc:'中国明清两代皇家宫殿，世界最大木质结构古建筑群', icon:'🏯', bg:'linear-gradient(135deg,#f5576c,#ff6b6b)', rating:4.9, dist:'距北京南站 12km', badge:'5A景区' },
+  { name:'西湖', city:'杭州', desc:'人间天堂，湖光山色与历史文化完美融合', icon:'🌊', bg:'linear-gradient(135deg,#4facfe,#00f2fe)', rating:4.9, dist:'距杭州东站 8km', badge:'世界遗产' },
+  { name:'中山陵', city:'南京', desc:'中国近代民主革命先行者孙中山的陵墓', icon:'⛰️', bg:'linear-gradient(135deg,#43e97b,#38f9d7)', rating:4.7, dist:'距南京南站 15km', badge:'5A景区' },
+  { name:'广州塔', city:'广州', desc:'中国第一高塔，俯瞰羊城全景的最佳观景点', icon:'🗼', bg:'linear-gradient(135deg,#fa709a,#fee140)', rating:4.6, dist:'距广州南站 22km', badge:'地标' },
+  { name:'宽窄巷子', city:'成都', desc:'成都遗留下来的清朝古街道，感受慢生活', icon:'🏮', bg:'linear-gradient(135deg,#a18cd1,#fbc2eb)', rating:4.5, dist:'距成都东站 14km', badge:'文化街区' },
+];
+
+const meals = [
+  { name:'红烧牛肉饭', desc:'鲜嫩牛肉配时令蔬菜', price:45, cat:'rice', icon:'🍛', bg:'linear-gradient(135deg,#ffecd2,#fcb69f)' },
+  { name:'宫保鸡丁饭', desc:'经典川菜，微辣鲜香', price:38, cat:'rice', icon:'🍚', bg:'linear-gradient(135deg,#ff9a9e,#fecfef)' },
+  { name:'鱼香肉丝饭', desc:'甜酸适口，下饭首选', price:36, cat:'rice', icon:'🍱', bg:'linear-gradient(135deg,#a1c4fd,#c2e9fb)' },
+  { name:'日式豚骨拉面', desc:'浓郁汤底，叉烧入味', price:42, cat:'noodle', icon:'🍜', bg:'linear-gradient(135deg,#f093fb,#f5576c)' },
+  { name:'兰州牛肉面', desc:'一清二白三红四绿五黄', price:35, cat:'noodle', icon:'🍝', bg:'linear-gradient(135deg,#4facfe,#00f2fe)' },
+  { name:'葱油拌面', desc:'上海风味，葱香四溢', price:25, cat:'noodle', icon:'🍜', bg:'linear-gradient(135deg,#43e97b,#38f9d7)' },
+  { name:'卤味拼盘', desc:'鸭脖、豆干、藕片', price:28, cat:'snack', icon:'🥘', bg:'linear-gradient(135deg,#fa709a,#fee140)' },
+  { name:'坚果果干盒', desc:'混合坚果+蔓越莓干', price:22, cat:'snack', icon:'🥜', bg:'linear-gradient(135deg,#a18cd1,#fbc2eb)' },
+  { name:'鲜榨橙汁', desc:'100%鲜榨，无添加', price:18, cat:'drink', icon:'🍊', bg:'linear-gradient(135deg,#ffecd2,#fcb69f)' },
+  { name:'现磨咖啡', desc:'阿拉比卡咖啡豆现磨', price:25, cat:'drink', icon:'☕', bg:'linear-gradient(135deg,#ff9a9e,#fecfef)' },
+  { name:'矿泉水', desc:'550ml天然矿泉水', price:5, cat:'drink', icon:'💧', bg:'linear-gradient(135deg,#a1c4fd,#c2e9fb)' },
+  { name:'酸奶', desc:'低温发酵酸奶', price:12, cat:'drink', icon:'🥛', bg:'linear-gradient(135deg,#43e97b,#38f9d7)' },
+];
+
+// ===== CART =====
+let cart = [];
+
+// ===== INIT =====
+function init() {
+  const today = new Date();
+  document.getElementById('todayDate').textContent = `${today.getFullYear()}年${today.getMonth()+1}月${today.getDate()}日 周${'日一二三四五六'[today.getDay()]}`;
+  renderHotTrains();
+  renderFullTrains();
+  renderStations();
+  renderBooks();
+  renderAudioBooks();
+  renderMagazines();
+  renderSpots();
+  renderHomeSpots();
+  renderMeals('all');
+}
+
+// ===== RENDER FUNCTIONS =====
+function renderTrainCard(t, showBtn = false) {
+  return `
+    <div class="train-card animate-in" onclick="showTrainDetail('${t.no}')">
+      <div class="train-top">
+        <span class="train-no">${t.no}</span>
+        <span class="train-type">${t.type}</span>
+      </div>
+      <div class="train-route">
+        <div class="train-station">
+          <div class="train-time">${t.dep}</div>
+          <div class="train-city">${t.from}</div>
+        </div>
+        <div class="train-arrow">
+          <span>${t.dur}</span>
+          <div class="line"></div>
+          <span>直达</span>
+        </div>
+        <div class="train-station">
+          <div class="train-time">${t.arr}</div>
+          <div class="train-city">${t.to}</div>
+        </div>
+      </div>
+      <div class="train-bottom">
+        <div class="train-price">${t.price} <small>起</small></div>
+        <span class="train-status ${t.statusClass}">${t.status}</span>
+      </div>
+    </div>`;
+}
+
+function renderHotTrains() {
+  document.getElementById('hotTrainList').innerHTML = trains.slice(0,4).map(t => renderTrainCard(t)).join('');
+}
+
+function renderFullTrains() {
+  document.getElementById('fullTrainList').innerHTML = trains.map(t => renderTrainCard(t)).join('');
+}
+
+function renderStations() {
+  document.getElementById('stationScroll').innerHTML = stations.map(s => `
+    <div class="station-card" onclick="showStationDetail('${s.name}')">
+      <div class="station-img" style="background:${s.bg}">${s.icon}</div>
+      <div class="station-info">
+        <h3>${s.name}</h3>
+        <p>${s.desc}</p>
+        <div class="station-tags">${s.tags.map(t => `<span class="station-tag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderBookCard(b) {
+  return `
+    <div class="book-card" onclick="showBookDetail('${b.title}')">
+      <div class="book-cover" style="background:${b.bg}">
+        ${b.cover}
+        <span class="book-badge">${b.badge}</span>
+      </div>
+      <div class="book-info">
+        <h3>${b.title}</h3>
+        <p>${b.author}</p>
+        <div class="book-rating">⭐ ${b.rating}</div>
+      </div>
+    </div>`;
+}
+
+function renderBooks() {
+  document.getElementById('bookScroll').innerHTML = books.map(renderBookCard).join('');
+}
+
+function renderAudioBooks() {
+  document.getElementById('audioBookScroll').innerHTML = audioBooks.map(renderBookCard).join('');
+}
+
+function renderMagazines() {
+  document.getElementById('magazineScroll').innerHTML = magazines.map(renderBookCard).join('');
+}
+
+function renderSpotCard(s, vertical = false) {
+  if (vertical) {
+    return `
+      <div class="train-card" style="border-left-color:var(--accent);cursor:pointer" onclick="showSpotDetail('${s.name}')">
+        <div style="display:flex;gap:12px;">
+          <div style="width:80px;height:80px;border-radius:12px;background:${s.bg};display:flex;align-items:center;justify-content:center;font-size:36px;flex-shrink:0;">${s.icon}</div>
+          <div style="flex:1;">
+            <div style="display:flex;justify-content:space-between;align-items:start;">
+              <h3 style="font-size:15px;font-weight:700;margin-bottom:4px;">${s.name}</h3>
+              <span style="font-size:10px;padding:2px 8px;border-radius:10px;background:var(--accent);color:white;">${s.badge}</span>
+            </div>
+            <p style="font-size:12px;color:var(--primary);margin-bottom:4px;">📍 ${s.city} · ${s.dist}</p>
+            <p style="font-size:12px;color:var(--text-light);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${s.desc}</p>
+            <div style="margin-top:6px;color:#f59e0b;font-size:12px;">⭐ ${s.rating}</div>
+          </div>
+        </div>
+      </div>`;
+  }
+  return `
+    <div class="spot-card" onclick="showSpotDetail('${s.name}')">
+      <div class="spot-img" style="background:${s.bg}">
+        ${s.icon}
+        <span class="spot-badge">${s.badge}</span>
+      </div>
+      <div class="spot-info">
+        <h3>${s.name}</h3>
+        <p>📍 ${s.city} · ${s.dist}</p>
+        <div class="spot-meta">
+          <span class="spot-rating">⭐ ${s.rating}</span>
+          <span class="spot-dist">查看详情 ›</span>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderHomeSpots() {
+  document.getElementById('homeSpotScroll').innerHTML = spots.slice(0,4).map(s => renderSpotCard(s)).join('');
+}
+
+function renderSpots() {
+  document.getElementById('spotList').innerHTML = spots.map(s => renderSpotCard(s, true)).join('');
+}
+
+function renderMeals(cat) {
+  const filtered = cat === 'all' ? meals : meals.filter(m => m.cat === cat);
+  document.getElementById('mealGrid').innerHTML = filtered.map((m, i) => `
+    <div class="meal-card" data-cat="${m.cat}">
+      <div class="meal-img" style="background:${m.bg}">${m.icon}</div>
+      <div class="meal-info">
+        <h3>${m.name}</h3>
+        <p>${m.desc}</p>
+        <div class="meal-bottom">
+          <div class="meal-price"><small>¥</small>${m.price}</div>
+          <button class="add-btn" onclick="addToCart(${i},'${m.cat}')">+</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ===== CART FUNCTIONS =====
+function addToCart(idx, cat) {
+  const filtered = cat === 'all' ? meals : meals.filter(m => m.cat === cat);
+  const meal = filtered[idx] || meals[idx];
+  cart.push(meal);
+  updateCart();
+  showToast(`已添加 ${meal.name}`);
+}
+
+function updateCart() {
+  const bar = document.getElementById('cartBar');
+  const badge = document.getElementById('cartBadge');
+  const total = document.getElementById('cartTotal');
+  if (cart.length > 0) {
+    bar.classList.add('show');
+    badge.textContent = cart.length;
+    total.textContent = cart.reduce((s, m) => s + m.price, 0);
+  } else {
+    bar.classList.remove('show');
+  }
+}
+
+function checkout() {
+  if (cart.length === 0) return;
+  const total = cart.reduce((s, m) => s + m.price, 0);
+  const orderNum = 'GD' + Date.now().toString().slice(-8);
+  document.getElementById('orderInfo').innerHTML = `
+    <div style="font-size:14px;font-weight:700;margin-bottom:8px;">订单信息</div>
+    <div class="detail-row"><span class="label">订单号</span><span class="value">${orderNum}</span></div>
+    <div class="detail-row"><span class="label">餐品</span><span class="value">${cart.map(m=>m.name).join('、')}</span></div>
+    <div class="detail-row"><span class="label">配送至</span><span class="value">05车 08A座</span></div>
+    <div class="detail-row"><span class="label">预计送达</span><span class="value">约30分钟</span></div>
+    <div class="detail-row"><span class="label">实付金额</span><span class="value" style="color:var(--accent);font-size:16px;">¥${total}</span></div>`;
+  document.getElementById('orderModal').classList.add('show');
+  cart = [];
+  updateCart();
+}
+
+function closeOrderModal() {
+  document.getElementById('orderModal').classList.remove('show');
+  switchTab('home');
+}
+
+// ===== DETAIL MODALS =====
+function showTrainDetail(no) {
+  const t = trains.find(x => x.no === no);
+  if (!t) return;
+  document.getElementById('modalBody').innerHTML = `
+    <h2>${t.no} ${t.type}</h2>
+    <div style="text-align:center;padding:16px 0;background:var(--bg);border-radius:12px;margin-bottom:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:0 20px;">
+        <div><div style="font-size:28px;font-weight:700;">${t.dep}</div><div style="font-size:13px;color:var(--text-light);margin-top:4px;">${t.from}</div></div>
+        <div style="text-align:center;"><div style="font-size:13px;color:var(--text-light);">${t.dur}</div><div style="width:60px;height:2px;background:linear-gradient(to right,var(--primary),var(--accent));margin:6px 0;position:relative;"><span style="position:absolute;right:-6px;top:-7px;color:var(--accent);">▸</span></div><div style="font-size:11px;color:var(--text-light);">直达</div></div>
+        <div><div style="font-size:28px;font-weight:700;">${t.arr}</div><div style="font-size:13px;color:var(--text-light);margin-top:4px;">${t.to}</div></div>
+      </div>
+    </div>
+    <div class="detail-row"><span class="label">车次</span><span class="value">${t.no}</span></div>
+    <div class="detail-row"><span class="label">车型</span><span class="value">${t.type}</span></div>
+    <div class="detail-row"><span class="label">历时</span><span class="value">${t.dur}</span></div>
+    <div class="detail-row"><span class="label">余票状态</span><span class="train-status ${t.statusClass}" style="font-size:12px;">${t.status}</span></div>
+    <div style="margin-top:12px;font-weight:700;font-size:14px;margin-bottom:8px;">席别与票价</div>
+    ${t.seats.map(s => `<div class="detail-row"><span class="label">${s.split(' ¥')[0]}</span><span class="value">${s.includes('¥') ? s.split(' ¥')[1] : '售罄'}</span></div>`).join('')}
+    <button onclick="closeModal();showToast('已加入行程')" style="width:100%;margin-top:16px;padding:12px;background:var(--primary);color:white;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;">预订车票</button>`;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function showStationDetail(name) {
+  const s = stations.find(x => x.name === name);
+  if (!s) return;
+  document.getElementById('modalBody').innerHTML = `
+    <div style="height:120px;background:${s.bg};border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:60px;margin-bottom:16px;">${s.icon}</div>
+    <h2>${s.name}</h2>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:16px;line-height:1.6;">${s.desc}</p>
+    <div class="detail-row"><span class="label">站台数量</span><span class="value">${s.tags[0]}</span></div>
+    <div class="detail-row"><span class="label">轨道数量</span><span class="value">${s.tags[1]}</span></div>
+    <div class="detail-row"><span class="label">地铁接驳</span><span class="value">${s.tags[2]}</span></div>
+    <div style="margin-top:16px;font-weight:700;font-size:14px;margin-bottom:8px;">车站服务</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;text-align:center;">
+      <div style="padding:12px;background:var(--bg);border-radius:10px;"><div style="font-size:22px;margin-bottom:4px;">🎫</div><div style="font-size:12px;">售票处</div></div>
+      <div style="padding:12px;background:var(--bg);border-radius:10px;"><div style="font-size:22px;margin-bottom:4px;">🍜</div><div style="font-size:12px;">餐厅</div></div>
+      <div style="padding:12px;background:var(--bg);border-radius:10px;"><div style="font-size:22px;margin-bottom:4px;">🛍️</div><div style="font-size:12px;">商店</div></div>
+      <div style="padding:12px;background:var(--bg);border-radius:10px;"><div style="font-size:22px;margin-bottom:4px;">🚻</div><div style="font-size:12px;">卫生间</div></div>
+      <div style="padding:12px;background:var(--bg);border-radius:10px;"><div style="font-size:22px;margin-bottom:4px;">♿</div><div style="font-size:12px;">无障碍</div></div>
+      <div style="padding:12px;background:var(--bg);border-radius:10px;"><div style="font-size:22px;margin-bottom:4px;">📶</div><div style="font-size:12px;">WiFi</div></div>
+    </div>`;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function showBookDetail(title) {
+  const all = [...books, ...audioBooks, ...magazines];
+  const b = all.find(x => x.title === title);
+  if (!b) return;
+  document.getElementById('modalBody').innerHTML = `
+    <div style="height:160px;background:${b.bg};border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:70px;margin-bottom:16px;position:relative;">
+      ${b.cover}
+      <span style="position:absolute;top:12px;right:12px;background:var(--accent);color:white;font-size:11px;padding:3px 10px;border-radius:10px;">${b.badge}</span>
+    </div>
+    <h2>${b.title}</h2>
+    <p style="color:var(--text-light);font-size:14px;margin-bottom:16px;">作者：${b.author} · ⭐ ${b.rating}分</p>
+    <p style="font-size:14px;line-height:1.8;color:var(--text);margin-bottom:16px;">旅途时光，一本好书相伴。精选优质读物，让您的高铁之旅充实而愉快。支持在线试读，到站前随时收藏精彩段落。</p>
+    <div class="detail-row"><span class="label">类型</span><span class="value">${b.badge}</span></div>
+    <div class="detail-row"><span class="label">评分</span><span class="value">⭐ ${b.rating}</span></div>
+    <div class="detail-row"><span class="label">适合场景</span><span class="value">高铁旅途阅读</span></div>
+    <button onclick="closeModal();showToast('已加入书架')" style="width:100%;margin-top:16px;padding:12px;background:var(--primary);color:white;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;">加入书架</button>
+    <button onclick="closeModal();showToast('开始试读')" style="width:100%;margin-top:8px;padding:12px;background:var(--primary-light);color:var(--primary);border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;">开始试读</button>`;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function showSpotDetail(name) {
+  const s = spots.find(x => x.name === name);
+  if (!s) return;
+  document.getElementById('modalBody').innerHTML = `
+    <div style="height:160px;background:${s.bg};border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:70px;margin-bottom:16px;position:relative;">
+      ${s.icon}
+      <span style="position:absolute;top:12px;left:12px;background:rgba(0,0,0,0.6);color:white;font-size:11px;padding:3px 10px;border-radius:10px;">${s.badge}</span>
+    </div>
+    <h2>${s.name}</h2>
+    <p style="color:var(--primary);font-size:13px;margin-bottom:4px;">📍 ${s.city} · ${s.dist}</p>
+    <p style="color:#f59e0b;font-size:13px;margin-bottom:12px;">⭐ ${s.rating}分</p>
+    <p style="font-size:14px;line-height:1.8;margin-bottom:16px;">${s.desc}</p>
+    <div class="detail-row"><span class="label">开放时间</span><span class="value">08:00 - 18:00</span></div>
+    <div class="detail-row"><span class="label">门票价格</span><span class="value">免费 / ¥60</span></div>
+    <div class="detail-row"><span class="label">建议游玩</span><span class="value">2-3小时</span></div>
+    <div class="detail-row"><span class="label">交通方式</span><span class="value">地铁/公交可达</span></div>
+    <button onclick="closeModal();showToast('已收藏景点')" style="width:100%;margin-top:16px;padding:12px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;">收藏景点</button>
+    <button onclick="closeModal();showToast('导航已开启')" style="width:100%;margin-top:8px;padding:12px;background:var(--primary-light);color:var(--primary);border:none;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;">查看路线</button>`;
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal(e) {
+  if (e && e.target !== e.currentTarget) return;
+  document.getElementById('modalOverlay').classList.remove('show');
+}
+
+// ===== NAVIGATION =====
+function switchTab(tab) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + tab).classList.add('active');
+  const tabs = document.querySelectorAll('.tab-item');
+  const map = {home:0, train:1, station:2, book:3, spot:4, meal:5};
+  if (map[tab] !== undefined) tabs[map[tab]].classList.add('active');
+
+  const cartBar = document.getElementById('cartBar');
+  if (tab === 'meal') cartBar.classList.remove('show');
+  else if (cart.length > 0) cartBar.classList.add('show');
+}
+
+function swapStations() {
+  const f = document.getElementById('fromStation');
+  const t = document.getElementById('toStation');
+  [f.value, t.value] = [t.value, f.value];
+}
+
+function swapTrainStations() {
+  const f = document.getElementById('trainFrom');
+  const t = document.getElementById('trainTo');
+  [f.value, t.value] = [t.value, f.value];
+}
+
+function searchTrains() {
+  switchTab('train');
+  document.getElementById('trainFrom').value = document.getElementById('fromStation').value;
+  document.getElementById('trainTo').value = document.getElementById('toStation').value;
+  showToast('查询成功，共128趟列车');
+}
+
+function searchTrainDetail() {
+  showToast('查询成功，共128趟列车');
+}
+
+function filterMeal(cat, el) {
+  document.querySelectorAll('.meal-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderMeals(cat);
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 1800);
+}
+
+// ===== START =====
+init();
+</script>
 </body>
 </html>
