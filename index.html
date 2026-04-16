@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高铁出行阅读平台</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft YaHei",sans-serif}
+body{background:linear-gradient(135deg,#e6f2ff,#f0f8ff);color:#222}
+header{background:linear-gradient(90deg,#0052cc,#007bff);color:white;padding:20px;text-align:center;border-radius:0 0 20px 20px;box-shadow:0 4px 12px rgba(0,82,204,0.2)}
+.container{max-width:1100px;margin:25px auto;padding:0 15px}
+.card{background:white;border-radius:16px;padding:24px;margin-bottom:20px;box-shadow:0 6px 18px rgba(0,0,0,0.08);border:1px solid #e6f0ff}
+h2{color:#0052cc;margin-bottom:14px;font-size:22px}
+.table{width:100%;border-collapse:collapse;margin-top:10px}
+.table th{background:#e6f2ff;color:#0052cc;padding:12px;text-align:left}
+.table td{padding:12px;border-bottom:1px solid #f0f0f0}
+.btn{background:linear-gradient(90deg,#007bff,#0052cc);color:white;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
+.btn:hover{opacity:0.9}
+.food-list{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px}
+.food-item{width:150px;padding:14px;border-radius:12px;background:#f8fbff;border:1px solid #e6f0ff;text-align:center}
+.book-area{background:#fff8e6;border:1px solid #ffe8b3;border-radius:14px;padding:20px;margin-top:10px}
+.book-title{font-size:18px;color:#b36b00;margin-bottom:8px}
+.book-content{font-size:15px;line-height:1.8;color:#444}
+</style>
+</head>
+<body>
+<header>
+<h1>🚄 高铁出行 · 阅读 · 点餐平台</h1>
+<p>车次查询 · 车站信息 · 景点推荐 · 高铁阅读 · 在线点餐</p>
+</header>
+
+<div class="container">
+
+<!-- 车次信息 -->
+<div class="card">
+<h2>🚄 高铁车次信息</h2>
+<table class="table">
+<tr><th>车次</th><th>出发站</th><th>到达站</th><th>发车</th><th>到达</th></tr>
+<tr><td>G101</td><td>昆明南</td><td>大理</td><td>08:00</td><td>10:15</td></tr>
+<tr><td>G205</td><td>昆明南</td><td>丽江</td><td>09:30</td><td>12:45</td></tr>
+<tr><td>G312</td><td>昆明南</td><td>贵阳北</td><td>11:10</td><td>14:20</td></tr>
+<tr><td>G408</td><td>昆明南</td><td>成都东</td><td>13:20</td><td>17:05</td></tr>
+</table>
+</div>
+
+<!-- 车站信息 -->
+<div class="card">
+<h2>🏢 高铁车站信息</h2>
+<table class="table">
+<tr><th>车站</th><th>城市</th><th>地址</th><th>服务</th></tr>
+<tr><td>昆明南站</td><td>昆明市</td><td>呈贡区吴家营</td><td>候车室、餐饮、寄存</td></tr>
+<tr><td>大理站</td><td>大理市</td><td>下关镇</td><td>旅游咨询、特产店</td></tr>
+<tr><td>丽江站</td><td>丽江市</td><td>古城区南口路</td><td>接送、租车</td></tr>
+<tr><td>普洱站</td><td>普洱市</td><td>思茅区石龙路</td><td>休息、充电</td></tr>
+</table>
+</div>
+
+<!-- 旅游景点 -->
+<div class="card">
+<h2>🌄 沿线旅游景点</h2>
+<table class="table">
+<tr><th>城市</th><th>景点</th><th>简介</th></tr>
+<tr><td>大理</td><td>洱海、大理古城</td><td>风花雪月、苍山洱海</td></tr>
+<tr><td>丽江</td><td>玉龙雪山、古城</td><td>纳西文化、雪山美景</td></tr>
+<tr><td>昆明</td><td>滇池、石林</td><td>春城风光、喀斯特地貌</td></tr>
+<tr><td>普洱</td><td>普洱茶园、太阳河公园</td><td>茶文化、自然生态</td></tr>
+</table>
+</div>
+
+<!-- 高铁阅读区（新增！） -->
+<div class="card">
+<h2>📖 高铁阅读区（旅途不无聊）</h2>
+<div class="book-area">
+<div class="book-title">《高铁上的风景》</div>
+<div class="book-content">
+高铁飞驰，窗外掠过山川河流、田野村庄。从昆明到大理，一路青山绿水；从大理到丽江，云雾缭绕如仙境。旅途虽短，风景无限，愿你在高铁上遇见最美的云南。
+</div>
+</div>
+<div class="book-area" style="margin-top:12px">
+<div class="book-title">《云南旅行小记》</div>
+<div class="book-content">
+云南的美，藏在风里、云里、山水里。大理的风，丽江的雪，昆明的花，普洱的茶。每一座城市都有自己的故事，每一段旅途都值得珍藏。
+</div>
+</div>
+</div>
+
+<!-- 高铁点餐 -->
+<div class="card">
+<h2>🍱 高铁点餐（到站送达）</h2>
+<div class="food-list">
+<div class="food-item"><p>红烧牛肉饭</p><p>¥38</p><button class="btn">点餐</button></div>
+<div class="food-item"><p>香菇滑鸡饭</p><p>¥35</p><button class="btn">点餐</button></div>
+<div class="food-item"><p>素食套餐</p><p>¥32</p><button class="btn">点餐</button></div>
+<div class="food-item"><p>云南过桥米线</p><p>¥42</p><button class="btn">点餐</button></div>
+<div class="food-item"><p>普洱奶茶</p><p>¥18</p><button class="btn">点餐</button></div>
+</div>
+</div>
+
+</div>
+</body>
+</html>
